@@ -1,9 +1,7 @@
 /*******************
-
   Cleaning script
-
 *******************/
-
-DROP TABLE IF EXISTS downloads;
-DROP TABLE IF EXISTS games;
-DROP TABLE IF EXISTS customers;
+DROP TABLE IF EXISTS Rental;
+DROP TABLE IF EXISTS GPU_Listing;
+DROP TABLE IF EXISTS GPU;
+DROP TABLE IF EXISTS User1;
