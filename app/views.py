@@ -9,14 +9,14 @@ def index(request):
     if request.POST:
         if request.POST['action'] == 'delete':
             with connection.cursor() as cursor:
-                cursor.execute("DELETE FROM customers WHERE customerid = %s", [request.POST['id']])
+                cursor.execute("DELETE FROM GPU_Listing WHERE Listingid = %s", [request.POST['id']])
 
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM customers ORDER BY customerid")
+        cursor.execute("SELECT * FROM GPU_Listing ORDER BY Listingid")
         customers = cursor.fetchall()
 
-    result_dict = {'records': customers}
+    result_dict = {'records': listings}
 
     return render(request,'app/index.html',result_dict)
 
