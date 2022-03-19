@@ -105,7 +105,7 @@ def listing(request):
     return render(request,'app/listing.html',result_dict)
 
 
-def rental(request):
+def rental(request, Listingid):
     """Shows the main page"""
     context = {}
     status = ''
@@ -114,14 +114,14 @@ def rental(request):
         ## Check if customerid is already in the table
         with connection.cursor() as cursor:
 
-            cursor.execute("SELECT * FROM customers WHERE customerid = %s", [request.POST['customerid']])
-            customer = cursor.fetchone()
+            cursor.execute("SELECT * FROM GPU_Listing WHERE Listingid = %s", [Listingid])
+            listing = cursor.fetchone()
             ## No customer with same id
-            if customer == None:
+            if listing != None:
                 ##TODO: date validation
-                cursor.execute("INSERT INTO customers VALUES (%s, %s, %s, %s, %s, %s, %s)"
-                        , [request.POST['first_name'], request.POST['last_name'], request.POST['email'],
-                           request.POST['dob'] , request.POST['since'], request.POST['customerid'], request.POST['country'] ])
+                cursor.execute("INSERT INTO Rental VALUES (%s, %s, %s, %s, %s, %s)"
+                        , [request.POST['Borrower_id'], lisintg[1], listing[2],
+                           [Listingid] , request.POST['Start_day'], request.POST['End_day']])
                 return redirect('index')    
             else:
                 status = 'Customer with ID %s already exists' % (request.POST['customerid'])
