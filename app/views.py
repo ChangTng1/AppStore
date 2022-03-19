@@ -120,7 +120,7 @@ def rental(request, Listingid):
             if listing != None:
                 ##TODO: date validation
                 cursor.execute("INSERT INTO Rental VALUES (%s, %s, %s, %s, %s, %s)"
-                        , [request.POST['Borrower_id'], lisintg[1], listing[2],
+                        , [request.POST['Borrower_id'], listing[1], listing[2],
                            [Listingid] , request.POST['Start_day'], request.POST['End_day']])
                 return redirect('index')    
             else:
