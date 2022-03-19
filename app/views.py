@@ -129,4 +129,4 @@ def rental(request):
 
     context['status'] = status
  
-    return render(request, "app/add.html", context)
+    return render(request, "app/rental.html", context)
