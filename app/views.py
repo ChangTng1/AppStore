@@ -114,14 +114,14 @@ def rental(request, Listingid):
         ## Check if customerid is already in the table
         with connection.cursor() as cursor:
 
-            cursor.execute("SELECT * FROM GPU_Listing WHERE Listingid = %s", [Listingid])
+            cursor.execute("SELECT * FROM GPU_Listing WHERE Listingid = %s", Listingid)
             listing = cursor.fetchone()
             ## No customer with same id
             if listing != None:
                 ##TODO: date validation
                 cursor.execute("INSERT INTO Rental VALUES (%s, %s, %s, %s, %s, %s)"
                         , [request.POST['Borrower_id'], listing[1], listing[2],
-                           [Listingid] , request.POST['Start_day'], request.POST['End_day']])
+                           int(Listingid) , request.POST['Start_day'], request.POST['End_day']])
                 return redirect('index')    
             else:
                 status = 'Customer with ID %s already exists' % (request.POST['customerid'])
