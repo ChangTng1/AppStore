@@ -26,5 +26,5 @@ urlpatterns = [
     path('view/<str:id>', app.views.view, name='view'),
     path('edit/<str:id>', app.views.edit, name='edit'),
     path('listing', app.views.listing, name = 'listing'),
-    path('rental', app.views.rental, name = 'rental')
+    path('rental/<str:id>', app.views.rental, name = 'rental')
 ]
