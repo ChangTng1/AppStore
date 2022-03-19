@@ -103,3 +103,30 @@ def listing(request):
     result_dict = {'records': listings}
 
     return render(request,'app/listing.html',result_dict)
+
+
+def rental(request):
+    """Shows the main page"""
+    context = {}
+    status = ''
+
+    if request.POST:
+        ## Check if customerid is already in the table
+        with connection.cursor() as cursor:
+
+            cursor.execute("SELECT * FROM customers WHERE customerid = %s", [request.POST['customerid']])
+            customer = cursor.fetchone()
+            ## No customer with same id
+            if customer == None:
+                ##TODO: date validation
+                cursor.execute("INSERT INTO customers VALUES (%s, %s, %s, %s, %s, %s, %s)"
+                        , [request.POST['first_name'], request.POST['last_name'], request.POST['email'],
+                           request.POST['dob'] , request.POST['since'], request.POST['customerid'], request.POST['country'] ])
+                return redirect('index')    
+            else:
+                status = 'Customer with ID %s already exists' % (request.POST['customerid'])
+
+
+    context['status'] = status
+ 
+    return render(request, "app/add.html", context)
