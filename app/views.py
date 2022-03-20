@@ -127,10 +127,10 @@ def rental(request, Listingid):
                 cursor.execute("DELETE FROM GPU_Listing WHERE Listingid = %s", [Listingid])
                 cursor.execute("SELECT * FROM GPU_Listing g1 WHERE g1.listingid >= all (SELECT g2.listingid FROM GPU_Listing g2)")
                 last_entry = cursor.fetchone()
-                if (datetime.strptime(request.POST['Start_day'], '%Y-%m-%d').date() == listing[2]):
+                if (datetime.strptime(request.POST['Start_day'], '%Y-%m-%d').date() == listing[4]):
                     cursor.execute("INSERT INTO GPU_Listing VALUES(%s, %s,%s,%s,%s,%s,%s)", [last_entry[0] + 1 ,listing[1], listing[2], listing[3], 
                                                                                          request.POST['End_day'] + 1, listing[5], listing[6]])
-                if (datetime.strptime(request.POST['Start_day'], '%Y-%m-%d').date() == listing[2]):
+                if (datetime.strptime(request.POST['Start_day'], '%Y-%m-%d').date() > listing[4]):
                     cursor.execute("INSERT INTO GPU_Listing VALUES(%s, %s,%s,%s,%s,%s,%s)", [last_entry[0] + 1 ,listing[1], listing[2], listing[3], 
                                                                                          listing[4], request.POST['Start_day'] - 1, listing[6]])
                     cursor.execute("INSERT INTO GPU_Listing VALUES(%s, %s,%s,%s,%s,%s,%s)", [last_entry[0] + 2 ,listing[1], listing[2], listing[3], 
