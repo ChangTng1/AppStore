@@ -119,7 +119,7 @@ def rental(request, Listingid):
             ## No customer with same id
             if request.POST['Start_day'] >= str(listing[4]) and request.POST['End_day'] <= str(listing[5]):
                 ##TODO: date validation
-                cursor.execute("INSERT INTO Rental VALUES (%s, %s, %s, %d, %s, %s)"
+                cursor.execute("INSERT INTO Rental VALUES (%s, %s, %s, %s, %s, %s)"
                         , [request.POST['Borrower_id'], listing[1], listing[2],
                            int(Listingid) , request.POST['Start_day'], request.POST['End_day']])
                 cursor.execute("DELETE FROM GPU_Listing WHERE Listingid = %s", [Listingid])
