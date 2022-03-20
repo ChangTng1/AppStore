@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.db import connection
 from datetime import datetime
 from datetime import date
+from datetime import timedelta
 
 # Create your views here.
 def index(request):
@@ -129,12 +130,12 @@ def rental(request, Listingid):
                 last_entry = cursor.fetchone()
                 if (datetime.strptime(request.POST['Start_day'], '%Y-%m-%d').date() == listing[4]):
                     cursor.execute("INSERT INTO GPU_Listing VALUES(%s, %s,%s,%s,%s,%s,%s)", [last_entry[0] + 1 ,listing[1], listing[2], listing[3], 
-                                                                                         datetime.strptime(request.POST['End_day'], '%Y-%m-%d').date() + 1, listing[5], listing[6]])
+                                                                                         datetime.strptime(request.POST['End_day'], '%Y-%m-%d').date() + timedelta(days = 1), listing[5], listing[6]])
                 if (datetime.strptime(request.POST['Start_day'], '%Y-%m-%d').date() > listing[4]):
                     cursor.execute("INSERT INTO GPU_Listing VALUES(%s, %s,%s,%s,%s,%s,%s)", [last_entry[0] + 1 ,listing[1], listing[2], listing[3], 
-                                                                                         listing[4], datetime.strptime(request.POST['Start_day'], '%Y-%m-%d').date() - 1, listing[6]])
+                                                                                         listing[4], datetime.strptime(request.POST['Start_day'], '%Y-%m-%d').date()  - timedelta(days = 1), listing[6]])
                     cursor.execute("INSERT INTO GPU_Listing VALUES(%s, %s,%s,%s,%s,%s,%s)", [last_entry[0] + 2 ,listing[1], listing[2], listing[3], 
-                                                                                         datetime.strptime(request.POST['End_day'], '%Y-%m-%d').date() + 1, listing[5], listing[6]])
+                                                                                         datetime.strptime(request.POST['End_day'], '%Y-%m-%d').date() + timedelta(days = 1), listing[5], listing[6]])
                 return redirect('index')    
             else:
                 status = 'Invalid Rental Dates'
