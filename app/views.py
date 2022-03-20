@@ -117,7 +117,7 @@ def rental(request, Listingid):
             cursor.execute("SELECT * FROM GPU_Listing WHERE Listingid = %s", [Listingid])
             listing = cursor.fetchone()
             ## No customer with same id
-            if request.POST['Start_day'] >= str(listing[4]) and request.POST['End_day'] <= str(listing[5]):
+            if int(request.POST['Start_day']) >= int(listing[4]) and int(request.POST['End_day']) <= int(listing[5]):
                 ##TODO: date validation
                 cursor.execute("INSERT INTO Rental VALUES (%s, %s, %s, %s, %s, %s)"
                         , [request.POST['Borrower_id'], listing[1], listing[2],
@@ -125,10 +125,10 @@ def rental(request, Listingid):
                 cursor.execute("DELETE FROM GPU_Listing WHERE Listingid = %s", [Listingid])
                 cursor.execute("SELECT * FROM GPU_Listing g1 WHERE g1.listingid >= all (SELECT g2.listingid FROM GPU_Listing g2)")
                 last_entry = cursor.fetchone()
-                if (request.POST['Start_day'] == str(listing[2])):
+                if (int(request.POST['Start_day']) == int(listing[2])):
                     cursor.execute("INSERT INTO GPU_Listing VALUES(%s, %s,%s,%s,%s,%s,%s)", [last_entry[0] + 1 ,listing[1], listing[2], listing[3], 
                                                                                          request.POST['End_day'] + 1, listing[5], listing[6]])
-                if (request.POST['Start_day'] >= str(listing[2])):
+                if (int(request.POST['Start_day']) >= int(listing[2])):
                     cursor.execute("INSERT INTO GPU_Listing VALUES(%s, %s,%s,%s,%s,%s,%s)", [last_entry[0] + 1 ,listing[1], listing[2], listing[3], 
                                                                                          listing[4], request.POST['Start_day'] - 1, listing[6]])
                     cursor.execute("INSERT INTO GPU_Listing VALUES(%s, %s,%s,%s,%s,%s,%s)", [last_entry[0] + 2 ,listing[1], listing[2], listing[3], 
