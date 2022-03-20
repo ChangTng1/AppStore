@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.db import connection
 from datetime import datetime
+from datetime import date
 
 # Create your views here.
 def index(request):
